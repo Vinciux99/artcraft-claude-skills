@@ -75,7 +75,7 @@ scripts/                     shared setup scripts
 Each app also has its own repository with the same skill, README, scripts and CI release.
 
 ## CI
-Validates every skill and `app.json`, checks the installers' syntax and rebuilds the zips on each push; a `v*` tag publishes a release with all zips.
+Validates every skill and `app.json`, checks the installers' syntax and rebuilds the zips on each push; each push to `main` publishes or updates a release with all zips.
 
 ## Caveats
 Windows arguments come from a working install; macOS paths follow upstream packaging but are **unverified** on a real Mac. The ArtCraft apps are young projects; `list_commands` is the source of truth.

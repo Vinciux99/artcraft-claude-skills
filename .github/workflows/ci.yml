@@ -52,7 +52,7 @@ jobs:
         run: powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -Local . -Apps all -DryRun -NoClaudeCode
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
     needs: [validate, installers]
     runs-on: ubuntu-latest
     permissions:
@@ -63,4 +63,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" dist/*.zip --title "ArtCraft skills ${GITHUB_REF_NAME}" --notes "Skill zips for every ArtCraft app plus all-artcraft-skills.zip. Install options are in the README."
+          VER="v$(node -e "console.log(require('./.claude-plugin/marketplace.json').metadata.version)")"
+          if gh release view "$VER" >/dev/null 2>&1; then
+            gh release upload "$VER" dist/*.zip --clobber
+          else
+            gh release create "$VER" dist/*.zip --target "$GITHUB_SHA" --latest --title "ArtCraft skills $VER" --notes "Skill zips for every ArtCraft app plus all-artcraft-skills.zip. Install options are in the README."
+          fi
