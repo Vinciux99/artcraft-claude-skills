@@ -1,0 +1,77 @@
+{
+  "name": "artcraft",
+  "owner": {
+    "name": "Vinciux99"
+  },
+  "metadata": {
+    "description": "Skills for the 13 ArtCraft apps (storytold): operating manuals plus a built-in MCP server setup guide for Windows and macOS.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "effectcraft",
+      "source": "./plugins/effectcraft",
+      "description": "Create and edit motion graphics and compositions with EffectCraft (After Effects-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "filmcraft",
+      "source": "./plugins/filmcraft",
+      "description": "Edit video projects with FilmCraft (Premiere Pro-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "photocraft",
+      "source": "./plugins/photocraft",
+      "description": "Edit raster images and layered documents with PhotoCraft (Photoshop-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "vectorcraft",
+      "source": "./plugins/vectorcraft",
+      "description": "Create and edit vector graphics with VectorCraft (Illustrator-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "lightcraft",
+      "source": "./plugins/lightcraft",
+      "description": "Manage photo libraries and develop RAW photos with LightCraft (Lightroom-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "designcraft",
+      "source": "./plugins/designcraft",
+      "description": "Lay out pages and publications with DesignCraft (InDesign-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "pdfcraft",
+      "source": "./plugins/pdfcraft",
+      "description": "Read, edit, fill, redact, sign and export PDFs with PdfCraft (Acrobat-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "cadcraft",
+      "source": "./plugins/cadcraft",
+      "description": "Draw, edit, inspect and export DXF/DWG drawings with CADCraft (AutoCAD-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "deckcraft",
+      "source": "./plugins/deckcraft",
+      "description": "Create and edit presentations (.pptx) with DeckCraft (PowerPoint-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "figcraft",
+      "source": "./plugins/figcraft",
+      "description": "Design interfaces, components and prototypes with FigCraft (Figma-style, ArtCraft suite, not the official Figma tools) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "gridcraft",
+      "source": "./plugins/gridcraft",
+      "description": "Read, create, format and export spreadsheets (.xlsx, .csv) with GridCraft (Excel-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "soundcraft",
+      "source": "./plugins/soundcraft",
+      "description": "Record, edit, mix and bounce audio sessions with SoundCraft (Pro Tools-style DAW, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    },
+    {
+      "name": "wordcraft",
+      "source": "./plugins/wordcraft",
+      "description": "Write, format, review and export documents (.docx, PDF) with WordCraft (Word-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "lightcraft",
+  "name": "LightCraft",
+  "tagline": "Lightroom-style photo library and RAW developer",
+  "upstream": "storytold/lightcraft",
+  "port": 7980,
+  "docsPort": 7980,
+  "launch": {
+    "args": [
+      "--control",
+      "{port}"
+    ]
+  },
+  "mcp": {
+    "server": "lightcraft",
+    "live": [
+      "mcp",
+      "--connect",
+      "127.0.0.1:{port}"
+    ],
+    "headless": [
+      "mcp"
+    ],
+    "default": "live"
+  },
+  "windows": {
+    "dirs": [
+      "{ProgramFiles}\\LightCraft",
+      "{LocalAppData}\\Programs\\LightCraft"
+    ],
+    "app": "lightcraft.exe",
+    "cli": "lightcraft-cli.exe"
+  },
+  "macos": {
+    "bundles": [
+      "/Applications/LightCraft.app",
+      "{home}/Applications/LightCraft.app"
+    ],
+    "appBinary": "Contents/MacOS/LightCraft",
+    "cliPaths": [
+      "{home}/.artcraft/bin/lightcraft-cli",
+      "/usr/local/bin/lightcraft-cli",
+      "/opt/homebrew/bin/lightcraft-cli",
+      "{bundle}/Contents/MacOS/lightcraft-cli"
+    ],
+    "cliReleaseAsset": "lightcraft-cli-{version}-macos-universal.zip",
+    "cliBinaryInZip": "lightcraft-cli"
+  },
+  "prepare": {
+    "dirs": []
+  },
+  "auth": {
+    "type": "none",
+    "notes": "Loopback only, no token."
+  },
+  "verified": {
+    "windows": true,
+    "macos": false
+  }
+}

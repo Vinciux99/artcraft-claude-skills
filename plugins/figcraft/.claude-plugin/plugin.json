@@ -1,0 +1,16 @@
+{
+  "name": "figcraft",
+  "version": "1.0.0",
+  "description": "Design interfaces, components and prototypes with FigCraft (Figma-style, ArtCraft suite, not the official Figma tools) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS.",
+  "author": {
+    "name": "Vinciux99"
+  },
+  "homepage": "https://github.com/Vinciux99/figcraft-claude-skill",
+  "license": "MIT",
+  "keywords": [
+    "artcraft",
+    "figcraft",
+    "mcp",
+    "skill"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "vectorcraft",
+  "version": "1.0.0",
+  "description": "Create and edit vector graphics with VectorCraft (Illustrator-style, ArtCraft suite) through MCP, the CLI or the control channel, and set up, connect or troubleshoot its MCP server on Windows and macOS.",
+  "author": {
+    "name": "Vinciux99"
+  },
+  "homepage": "https://github.com/Vinciux99/vectorcraft-claude-skill",
+  "license": "MIT",
+  "keywords": [
+    "artcraft",
+    "vectorcraft",
+    "mcp",
+    "skill"
+  ]
+}

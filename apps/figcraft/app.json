@@ -1,0 +1,60 @@
+{
+  "id": "figcraft",
+  "name": "FigCraft",
+  "tagline": "Figma-style interface and prototype design",
+  "upstream": "storytold/figcraft",
+  "port": 7984,
+  "docsPort": 7979,
+  "launch": {
+    "args": [
+      "--control",
+      "{port}"
+    ]
+  },
+  "mcp": {
+    "server": "figcraft",
+    "live": [
+      "mcp",
+      "--attach",
+      "{port}"
+    ],
+    "headless": [
+      "mcp"
+    ],
+    "default": "live"
+  },
+  "windows": {
+    "dirs": [
+      "{ProgramFiles}\\FigCraft",
+      "{LocalAppData}\\Programs\\FigCraft"
+    ],
+    "app": "figcraft.exe",
+    "cli": "figcraft-cli.exe"
+  },
+  "macos": {
+    "bundles": [
+      "/Applications/FigCraft.app",
+      "{home}/Applications/FigCraft.app"
+    ],
+    "appBinary": "Contents/MacOS/FigCraft",
+    "cliPaths": [
+      "{home}/.artcraft/bin/figcraft-cli",
+      "/usr/local/bin/figcraft-cli",
+      "/opt/homebrew/bin/figcraft-cli",
+      "{bundle}/Contents/MacOS/figcraft-cli"
+    ],
+    "cliReleaseAsset": "figcraft-cli-{version}-macos-universal.zip",
+    "cliBinaryInZip": "figcraft-cli"
+  },
+  "prepare": {
+    "dirs": []
+  },
+  "auth": {
+    "type": "none",
+    "notes": "Loopback only, no token."
+  },
+  "verified": {
+    "windows": true,
+    "macos": false
+  }
+}

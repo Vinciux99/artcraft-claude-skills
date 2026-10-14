@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ArtCraft skills picker</title>
+<style>
+:root{--bg:#fff;--fg:#1b1b1f;--mut:#62626b;--card:#f5f5f7;--bd:#dcdce1;--ac:#2b59c3}
+@media(prefers-color-scheme:dark){:root{--bg:#141417;--fg:#ececf0;--mut:#9d9da8;--card:#1d1d22;--bd:#34343b;--ac:#7aa2ff}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.5rem;margin:0 0 4px}p.s{color:var(--mut);margin:0 0 16px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button,a.b{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;text-decoration:none}
+button.g{background:var(--card);color:var(--fg);border:1px solid var(--bd)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+label.c{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px}
+label.c small{color:var(--mut);display:block}
+a{color:var(--ac)}code,pre{background:var(--card);border:1px solid var(--bd);border-radius:6px}
+code{padding:1px 5px}pre{padding:10px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+</style></head><body><main>
+<h1>ArtCraft skills for Claude</h1>
+<p class="s">Tick the apps you use. Each skill also knows how to create its MCP server (Windows and macOS).</p>
+<div class="bar"><button class="g" id="all">Select all</button><button class="g" id="none">Clear</button>
+<button id="zip">Download selected (.zip)</button><a class="b" href="dist/all-artcraft-skills.zip">Download all 13</a></div>
+<div class="grid" id="grid"></div>
+<h2>Install the selected apps</h2>
+<p class="s">Windows (PowerShell)</p><pre id="win"></pre>
+<p class="s">macOS (Terminal)</p><pre id="mac"></pre>
+<p class="s">Then upload the zip in the Claude app (Customize &gt; Skills &gt; + &gt; Create skill &gt; Upload a skill) or use the one-liners above for Claude Code and the MCP server setup.</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+var OWNER="Vinciux99",HUB="artcraft-claude-skills";
+var APPS=[{"id": "effectcraft", "name": "EffectCraft", "tagline": "After Effects-style motion graphics and compositing (.ecproj)"}, {"id": "filmcraft", "name": "FilmCraft", "tagline": "Premiere Pro-style video editor"}, {"id": "photocraft", "name": "PhotoCraft", "tagline": "Photoshop-style raster image editor"}, {"id": "vectorcraft", "name": "VectorCraft", "tagline": "Illustrator-style vector graphics editor"}, {"id": "lightcraft", "name": "LightCraft", "tagline": "Lightroom-style photo library and RAW developer"}, {"id": "designcraft", "name": "DesignCraft", "tagline": "InDesign-style page layout and publishing"}, {"id": "pdfcraft", "name": "PdfCraft", "tagline": "Acrobat-style PDF viewer and editor"}, {"id": "cadcraft", "name": "CADCraft", "tagline": "AutoCAD-style 2D/3D CAD (DXF/DWG)"}, {"id": "deckcraft", "name": "DeckCraft", "tagline": "PowerPoint-style presentations (.pptx)"}, {"id": "figcraft", "name": "FigCraft", "tagline": "Figma-style interface and prototype design"}, {"id": "gridcraft", "name": "GridCraft", "tagline": "Excel-style spreadsheets (.xlsx)"}, {"id": "soundcraft", "name": "SoundCraft", "tagline": "Pro Tools-style digital audio workstation"}, {"id": "wordcraft", "name": "WordCraft", "tagline": "Word-style document editor (.docx)"}];
+var RAW="https://raw.githubusercontent.com/"+OWNER+"/"+HUB+"/main";
+var grid=document.getElementById("grid");
+APPS.forEach(function(a){
+  var l=document.createElement("label");l.className="c";
+  l.innerHTML='<input type="checkbox" value="'+a.id+'"><span><b>'+a.name+'</b><small>'+a.tagline+'</small><small><a href="https://github.com/'+OWNER+'/'+a.id+'-claude-skill" target="_blank" rel="noopener">repository</a> &middot; <a href="dist/'+a.id+'-skill.zip">zip</a></small></span>';
+  grid.appendChild(l);
+});
+function sel(){return Array.prototype.map.call(grid.querySelectorAll("input:checked"),function(i){return i.value});}
+function upd(){var s=sel().join(",")||"gridcraft";
+  document.getElementById("win").textContent='powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((irm '+RAW+'/install.ps1))) -Apps '+s+'"';
+  document.getElementById("mac").textContent='curl -fsSL '+RAW+'/install.sh | bash -s -- --apps '+s;}
+grid.addEventListener("change",upd);upd();
+document.getElementById("all").onclick=function(){grid.querySelectorAll("input").forEach(function(i){i.checked=true});upd();};
+document.getElementById("none").onclick=function(){grid.querySelectorAll("input").forEach(function(i){i.checked=false});upd();};
+document.getElementById("zip").onclick=async function(){
+  var ids=sel();if(!ids.length){alert("Select at least one app");return;}
+  var out=new JSZip();
+  for(var i=0;i<ids.length;i++){
+    var r=await fetch("dist/"+ids[i]+"-skill.zip");var z=await JSZip.loadAsync(await r.arrayBuffer());
+    for(var n in z.files){if(!z.files[n].dir){out.file(n,await z.files[n].async("uint8array"));}}
+  }
+  var blob=await out.generateAsync({type:"blob"});var u=URL.createObjectURL(blob);
+  var a=document.createElement("a");a.href=u;a.download="artcraft-skills-selected.zip";a.click();URL.revokeObjectURL(u);
+};
+</script></main></body></html>

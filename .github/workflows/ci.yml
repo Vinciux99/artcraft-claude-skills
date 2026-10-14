@@ -1,0 +1,66 @@
+name: ci
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate every app
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n scripts/artcraft-setup.sh
+          bash -n install.sh
+          for dir in apps/*/; do
+            ID="$(basename "$dir")"
+            node scripts/json-tool.js validate "apps/$ID/app.json"
+            S="plugins/$ID/skills/$ID/SKILL.md"
+            test -f "$S"
+            grep -q "^name: $ID\$" "$S"
+            grep -q '^description: ' "$S"
+            test "$(node scripts/json-tool.js get "apps/$ID/app.json" id)" = "$ID"
+            unzip -p "dist/$ID-skill.zip" "$ID/SKILL.md" | cmp - "$S"
+          done
+          node scripts/json-tool.js validate .claude-plugin/marketplace.json
+          test "$(ls apps | wc -l)" -eq 13
+          echo ok
+
+  installers:
+    needs: validate
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: macOS dry run
+        if: runner.os == 'macOS'
+        shell: bash
+        run: bash install.sh --local . --apps all --dry-run --no-claude-code
+      - name: Windows dry run
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -Local . -Apps all -DryRun -NoClaudeCode
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [validate, installers]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/*.zip --title "ArtCraft skills ${GITHUB_REF_NAME}" --notes "Skill zips for every ArtCraft app plus all-artcraft-skills.zip. Install options are in the README."

@@ -1,0 +1,61 @@
+{
+  "id": "vectorcraft",
+  "name": "VectorCraft",
+  "tagline": "Illustrator-style vector graphics editor",
+  "upstream": "storytold/vectorcraft",
+  "port": 7979,
+  "docsPort": 7979,
+  "launch": {
+    "args": [
+      "--control",
+      "{port}"
+    ]
+  },
+  "mcp": {
+    "server": "vectorcraft",
+    "live": [
+      "mcp",
+      "--connect",
+      "127.0.0.1:{port}"
+    ],
+    "headless": [
+      "mcp",
+      "--headless"
+    ],
+    "default": "live"
+  },
+  "windows": {
+    "dirs": [
+      "{ProgramFiles}\\VectorCraft",
+      "{LocalAppData}\\Programs\\VectorCraft"
+    ],
+    "app": "vectorcraft.exe",
+    "cli": "vectorcraft-cli.exe"
+  },
+  "macos": {
+    "bundles": [
+      "/Applications/VectorCraft.app",
+      "{home}/Applications/VectorCraft.app"
+    ],
+    "appBinary": "Contents/MacOS/VectorCraft",
+    "cliPaths": [
+      "{home}/.artcraft/bin/vectorcraft-cli",
+      "/usr/local/bin/vectorcraft-cli",
+      "/opt/homebrew/bin/vectorcraft-cli",
+      "{bundle}/Contents/MacOS/vectorcraft-cli"
+    ],
+    "cliReleaseAsset": "vectorcraft-cli-{version}-macos-universal.zip",
+    "cliBinaryInZip": "vectorcraft-cli"
+  },
+  "prepare": {
+    "dirs": []
+  },
+  "auth": {
+    "type": "none",
+    "notes": "Loopback only, no token."
+  },
+  "verified": {
+    "windows": true,
+    "macos": false
+  }
+}
